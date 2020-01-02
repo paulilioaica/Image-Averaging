@@ -79,7 +79,7 @@ class Ui_Form(QWidget):
 
         self.treeview.clicked.connect(self.on_clicked)
         self.pushButton_2.clicked.connect(self.display_image)
-        self.pushButton.clicked.connect(self.mediate_image)
+        self.pushButton.clicked.connect(self.average)
         self.horizontalLayout.addWidget(self.treeview)
         self.horizontalLayout.addWidget(self.listview)
 
@@ -99,7 +99,7 @@ class Ui_Form(QWidget):
             self.pictures = list(pictures)
             self.graphicsView.setPixmap(QtGui.QPixmap(self.pictures[0]).scaled(self.graphicsView.size()))
 
-    def mediate_image(self):
+    def average(self):
         if self.input.text():
             num_images = int(self.input.text())
             if num_images > len(self.pictures):
@@ -126,7 +126,7 @@ class Ui_Form(QWidget):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
-        self.pushButton.setText(_translate("Form", "Mediate Image"))
+        self.pushButton.setText(_translate("Form", "Average Images"))
         self.label1.setText(_translate("Form", "Number of images selected:"))
         self.label2.setText(_translate("Form", "Select number of images to use"))
         self.pushButton_2.setText(_translate("Form", "Choose images"))
