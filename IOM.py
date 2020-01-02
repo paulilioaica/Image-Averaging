@@ -15,7 +15,7 @@ from PyQt5.QtGui import *
 BUTTONS_WIDTH = 0.048
 BUTTONS_HEIGHT = 0.027
 
-TEXT_WIDTH = 0.1
+TEXT_WIDTH = 0.2
 TEXT_HEIGHT = 0.012
 
 
@@ -24,7 +24,7 @@ class Ui_Form(QWidget):
         sizeObject = QtWidgets.QDesktopWidget().screenGeometry(-1)
         screen_width = sizeObject.width()
         screen_height = sizeObject.height()
-        Form.setObjectName("Form")
+        Form.setObjectName("Image Averaging")
         Form.setFixedSize(800, 500)
 
         self.pushButton = QtWidgets.QPushButton(Form)
@@ -91,7 +91,7 @@ class Ui_Form(QWidget):
         selections = self.listview.selectionModel().selectedIndexes()
         for picture in selections:
             filePath = self.dirModel.filePath(picture)
-            if filePath.endswith("jpg") or filePath.endswith("png"):
+            if filePath.endswith("jpg") or filePath.endswith("png") or filePath.endswith("jfif"):
                 pictures.add(filePath)
         print(pictures)
         self.label1.setText("Number of images selected is {}".format(str(len(pictures))))
@@ -103,7 +103,7 @@ class Ui_Form(QWidget):
         if self.input.text():
             num_images = int(self.input.text())
             if num_images > len(self.pictures):
-                self.label2.setText("Number is bigger than selected pictures, please choose a smaller number")
+                self.label2.setText("Number is bigger than selected pictures")
                 return
             self.pictures = self.pictures[:num_images]
             shape = (self.graphicsView.size().height(), self.graphicsView.size().width())
@@ -125,7 +125,7 @@ class Ui_Form(QWidget):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
+        Form.setWindowTitle(_translate("Image Averaging", "Image Averaging" ))
         self.pushButton.setText(_translate("Form", "Average Images"))
         self.label1.setText(_translate("Form", "Number of images selected:"))
         self.label2.setText(_translate("Form", "Select number of images to use"))
@@ -142,3 +142,4 @@ if __name__ == "__main__":
     ui.setupUi(Form)
     Form.show()
     sys.exit(app.exec_())
+
