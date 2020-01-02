@@ -1,16 +1,10 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog
-from PyQt5.QtCore import QDir
-from PyQt5.QtWidgets import QApplication, QFileSystemModel, QTreeView, QWidget, QVBoxLayout
 import numpy as np
-from PyQt5.QtGui import QIcon
-import os
-from PyQt5 import QtCore, QtGui, QtWidgets
 import qimage2ndarray
 from PIL import Image
-
-from PyQt5.QtWidgets import *
+from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 BUTTONS_WIDTH = 0.048
 BUTTONS_HEIGHT = 0.027
@@ -93,7 +87,6 @@ class Ui_Form(QWidget):
             filePath = self.dirModel.filePath(picture)
             if filePath.endswith("jpg") or filePath.endswith("png") or filePath.endswith("jfif"):
                 pictures.add(filePath)
-        print(pictures)
         self.label1.setText("Number of images selected is {}".format(str(len(pictures))))
         if pictures:
             self.pictures = list(pictures)
