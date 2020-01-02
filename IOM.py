@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'C:\Users\Paul\Desktop\IOM.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.0
-#
-# WARNING! All changes made in this file will be lost!
 from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog
 from PyQt5.QtCore import QDir
 from PyQt5.QtWidgets import QApplication, QFileSystemModel, QTreeView, QWidget, QVBoxLayout
@@ -19,34 +12,52 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
+BUTTONS_WIDTH = 0.048
+BUTTONS_HEIGHT = 0.027
+
+TEXT_WIDTH = 0.1
+TEXT_HEIGHT = 0.012
+
 
 class Ui_Form(QWidget):
     def setupUi(self, Form):
+        sizeObject = QtWidgets.QDesktopWidget().screenGeometry(-1)
+        screen_width = sizeObject.width()
+        screen_height = sizeObject.height()
         Form.setObjectName("Form")
-        Form.resize(600, 400)
+        Form.setFixedSize(800, 500)
+
         self.pushButton = QtWidgets.QPushButton(Form)
-        self.pushButton.setGeometry(QtCore.QRect(420, 340, 70, 20))
+        self.pushButton.setGeometry(
+            QtCore.QRect(480, 340, BUTTONS_WIDTH * screen_width, BUTTONS_HEIGHT * screen_height))
         self.pushButton.setObjectName("pushButton")
+
         self.horizontalWidget = QtWidgets.QWidget(Form)
         self.horizontalWidget.setGeometry(QtCore.QRect(30, 30, 300, 300))
         self.horizontalWidget.setObjectName("horizontalWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.input = QLineEdit(Form)
-        self.input.setGeometry(QtCore.QRect(440,315,20,20))
         self.horizontalLayout.setObjectName("horizontalLayout")
+
+        self.input = QLineEdit(Form)
+        self.input.setGeometry(QtCore.QRect(530, 315, 0.01 * screen_width, 0.015 * screen_height))
+
         self.label1 = QtWidgets.QLabel(Form)
-        self.label1.setGeometry(QtCore.QRect(90, 340, 140, 16))
+        self.label1.setGeometry(QtCore.QRect(90, 340, TEXT_WIDTH * screen_width, TEXT_HEIGHT * screen_height))
         self.label1.setObjectName("label")
         self.label2 = QtWidgets.QLabel(Form)
-        self.label2.setGeometry(QtCore.QRect(400, 300, 140, 16))
+        self.label2.setGeometry(QtCore.QRect(470, 300, TEXT_WIDTH * screen_width, TEXT_HEIGHT * screen_height))
         self.label2.setObjectName("label")
+
         self.graphicsView = QtWidgets.QLabel(Form)
-        self.graphicsView.setGeometry(QtCore.QRect(360, 50, 191, 191))
+        self.graphicsView.setGeometry(QtCore.QRect(430, 30, 270, 270))
         self.graphicsView.setObjectName("graphicsView")
+
         self.pushButton_2 = QtWidgets.QPushButton(Form)
-        self.pushButton_2.setGeometry(QtCore.QRect(110, 360, 70, 20))
+        self.pushButton_2.setGeometry(
+            QtCore.QRect(110, 360, BUTTONS_WIDTH * screen_width, BUTTONS_HEIGHT * screen_height))
         self.pushButton_2.setObjectName("pushButton_2")
+
         self.treeview = QTreeView()
         self.listview = QListView()
         self.listview.setSelectionMode(QAbstractItemView.ExtendedSelection)
@@ -67,7 +78,7 @@ class Ui_Form(QWidget):
         self.listview.setRootIndex(self.fileModel.index(self.path))
 
         self.treeview.clicked.connect(self.on_clicked)
-        self.pushButton_2.clicked.connect(self.displayImage)
+        self.pushButton_2.clicked.connect(self.display_image)
         self.pushButton.clicked.connect(self.mediate_image)
         self.horizontalLayout.addWidget(self.treeview)
         self.horizontalLayout.addWidget(self.listview)
@@ -75,7 +86,7 @@ class Ui_Form(QWidget):
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def displayImage(self):
+    def display_image(self):
         pictures = set()
         selections = self.listview.selectionModel().selectedIndexes()
         for picture in selections:
@@ -96,7 +107,7 @@ class Ui_Form(QWidget):
                 return
             self.pictures = self.pictures[:num_images]
             shape = (self.graphicsView.size().height(), self.graphicsView.size().width())
-            final_shape = (self.graphicsView.size().height(), self.graphicsView.size().width(),3)
+            final_shape = (self.graphicsView.size().width(), self.graphicsView.size().height(), 3)
             pils = []
             for pic in self.pictures:
                 pils.append(np.array(Image.open(pic).resize(shape)))
@@ -112,7 +123,6 @@ class Ui_Form(QWidget):
         path = self.dirModel.fileInfo(index).absoluteFilePath()
         self.listview.setRootIndex(self.fileModel.setRootPath(path))
 
-
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
@@ -122,8 +132,10 @@ class Ui_Form(QWidget):
         self.pushButton_2.setText(_translate("Form", "Choose images"))
         self.input.setText(_translate("Form", ""))
 
+
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     Form = QtWidgets.QWidget()
     ui = Ui_Form()
